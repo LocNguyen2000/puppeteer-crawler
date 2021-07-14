@@ -46,3 +46,26 @@ const puppeteer = require('puppeteer');
 
 
 })()
+
+// auto scroll event
+async function autoScroll(page){
+    await page.evaluate(async () => {
+        await new Promise((resolve, reject) => {
+
+            var totalHeight = 0;
+            var distance = 100;0
+            var endList = 4188
+
+            var timer = setInterval(() => {
+                // var scrollHeight = document.body.scrollHeight;
+                window.scrollBy(0, distance);
+                totalHeight += distance;
+
+                if(totalHeight >= endList){
+                    clearInterval(timer);
+                    resolve();
+                }
+            }, 250);
+        });
+    });
+}
