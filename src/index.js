@@ -1,71 +1,43 @@
 const fs = require('fs')
-const puppeteer = require('puppeteer');
+const stringify = require('csv-stringify')
+const puppeteer = require("puppeteer");
 
 (async () => {
-
-    const pageUrl = 'https://shopee.vn/M%C3%A1y-T%C3%ADnh-B%C3%A0n-cat.11035954.11035955'
-
-    const browser = await puppeteer.launch({ headless: false, slowMo: 500 });
+    const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
 
-    await page.goto(pageUrl, { waitUntil: 'networkidle2' });
-    await page.setViewport({
-        width: 1820,
-        height: 1000
-    });
+    const urls = [ "https://shp.ee/82r9k2f", "https://shp.ee/7s76r4s", "https://shp.ee/66t2jbv", 
+                    "https://shp.ee/67axqfh", "https://shp.ee/6bgiuii" ]
 
-    await autoScroll(page);
+    const shopUsername = []
 
-    const res = await page.evaluate(() => {
-        let listHtml = document.querySelectorAll('.shopee-search-item-result__item')
-        let products = []    
-
-        listHtml.forEach((product) => {
-            dataJson = {}
+    for (let i = 0; i < urls.length; i++) {
+        const url = urls[i];
+        await page.goto(`${url}`, { waitUntil: 'networkidle2' });
+        await page.setViewport({
+            width: 1820,
+            height: 1000
+        });
+        const spanHref = await page.evaluate(() => {
+            let selector = '.navbar-with-more-menu__item.navbar-with-more-menu__item--active' 
             try {
-                dataJson.title = product.querySelector(".yQmmFK").innerText
-                dataJson.price = product.querySelector("._32hnQt span._29R_un").innerText
-
-                products.push(dataJson)
-            } catch(error){
+                var html = document.querySelector(selector).href
+            }catch(error){
                 console.log(error);
             }
+            return {"url": html} 
         })
-        return products
+        shopUsername.push(spanHref);
+    }
+    console.log(shopUsername);
+
+    stringify(shopUsername, { header: true}, (err, output) => {
+        if (err) throw err
+        fs.writeFileSync('data.csv', output, (err) =>  {
+            if (err) throw err;
+            console.log('data.csv saved.');
+        })
     })
-
-    // // click next page
-    // await page.click('button.shopee-icon-button.shopee-icon-button--right')
-
-    console.log(res);
-    console.log('data', res.length);
-
-    // save data using file system
-    fs.writeFileSync('data.json', JSON.stringify(res, null, 2))
-    console.log('Save');
 
     await browser.close();
 })();
-
-// auto scroll event
-async function autoScroll(page){
-    await page.evaluate(async () => {
-        await new Promise((resolve, reject) => {
-
-            var totalHeight = 0;
-            var distance = 100;0
-            var endList = 4188
-
-            var timer = setInterval(() => {
-                // var scrollHeight = document.body.scrollHeight;
-                window.scrollBy(0, distance);
-                totalHeight += distance;
-
-                if(totalHeight >= endList){
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 250);
-        });
-    });
-}
