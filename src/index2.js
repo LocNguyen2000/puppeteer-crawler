@@ -38,9 +38,9 @@ const puppeteer = require('puppeteer');
     console.log(res);
     console.log('data length', res.length);
 
-    // save data using file system
-    fs.writeFileSync('data_2.json', JSON.stringify(res, null, 2))
-    console.log('Save');
+    // // save data using file system
+    // fs.writeFileSync('data_2.json', JSON.stringify(res, null, 2))
+    // console.log('Save');
 
     await browser.close();
 
