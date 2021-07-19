@@ -7,8 +7,7 @@
     "start": "cd src && node index.js",
     "another": "cd src && node index2.js",
     "main": "cd src && node main.js",
-    "attention": "cd src && node attention.js",
-    "test": "jest --coverage --detectOpenHandles"
+    "test-csv": "cd src && node test.js"
   },
   "author": "",
   "license": "ISC",
