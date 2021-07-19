@@ -21,7 +21,11 @@ const puppeteer = require("puppeteer");
 
     for (let i = 0; i < urls.length; i++) {
         const url = urls[i];
-        await page.goto(`${url}`, { waitUntil: 'networkidle2' });
+        try {
+            await page.goto(`${url}`, { waitUntil: 'networkidle2' });
+        } catch (error) {
+            return {"url": ""}
+        }
         await page.setViewport({
             width: 1820,
             height: 1000
@@ -40,6 +44,7 @@ const puppeteer = require("puppeteer");
                 
             } catch (error) {
                 console.log(error);
+                return {"url": ""}
             }
             return { "url": html }
         })
