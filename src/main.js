@@ -6,14 +6,16 @@ const puppeteer = require("puppeteer");
 (async () => {
     let inputPath = "../data/Shopee_HaNoi.csv";
 
-    let urls = [];
-    let startFrom = 3745
-    let endAt = 4000
+    let startFrom = 4201
+    let endAt = 4500
+
     const data = fs.readFileSync(inputPath, "utf8").split("\n");
 
-    urls = data;
+    let urls = [];
     const shopUsername = [];
-
+    
+    urls = data;
+    
     setTimeout(async () => {
         const browser = await puppeteer.launch({
             headless: false,
@@ -61,9 +63,11 @@ const puppeteer = require("puppeteer");
             console.log(spanHref);
             console.log(shopUsername.length);
 
+            const fileOutputPath = `./ouput/data_user-${startFrom}-${endAt}.csv`
+
             stringify(shopUsername, { header: true }, (err, output) => {
                 if (err) throw err;
-                fs.writeFileSync("./ouput/data_user-3745-4000-2.csv", output, (err) => {
+                fs.writeFileSync( fileOutputPath, output, (err) => {
                     if (err) throw err;
                     console.log("data saved.");
                 });
