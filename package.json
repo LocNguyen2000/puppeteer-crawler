@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "cd src && node index.js",
-    "another": "cd src && node index2.js"
+    "another": "cd src && node index2.js",
+    "main": "cd src && node main.js",
+    "test-csv": "cd src && node test.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +18,7 @@
     "csv-stringify": "^5.6.2",
 >>>>>>> 74c5de8931bb176e9bd446d0849834d49eba05f8
     "express": "^4.17.1",
-    "puppeteer": "^10.1.0",
-    "winston": "^3.3.3"
-  }
+    "puppeteer": "^10.1.0"
+  },
+  "devDependencies": {}
 }

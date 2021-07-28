@@ -1,10 +1,9 @@
 /node_modules
 
+/coverage
+
 package-lock.json
-<<<<<<< HEAD
 
 /src/debug.log
-=======
-/src/debug.log
-/src/data.csv
->>>>>>> 74c5de8931bb176e9bd446d0849834d49eba05f8
+
+/src/**/*.csv
