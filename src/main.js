@@ -1,7 +1,7 @@
 const fs = require("fs");
 const stringify = require("csv-stringify");
-// const parse = require('csv-parse');
 const puppeteer = require("puppeteer");
+
 
 (async () => {
     let inputPath = "../data/Shopee_HaNoi.csv";

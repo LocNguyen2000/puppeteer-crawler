@@ -4,21 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "crawler": "cd src && node crawler.js",
+    "cluster": "cd src && node cluster.js",
     "start": "cd src && node index.js",
     "another": "cd src && node index2.js",
-    "main": "cd src && node main.js",
-    "test-csv": "cd src && node test.js"
+    "main": "cd src && node main.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "csv-parse": "^4.16.0",
-=======
     "csv-stringify": "^5.6.2",
->>>>>>> 74c5de8931bb176e9bd446d0849834d49eba05f8
     "express": "^4.17.1",
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^10.1.0",
+    "puppeteer-cluster": "^0.22.0"
   },
   "devDependencies": {}
 }
