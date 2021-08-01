@@ -15,11 +15,22 @@ const { Cluster } = require('puppeteer-cluster');
         "https://shopee.vn/caobacsilver",
         "https://shopee.vn/huyentrang8610?smtt=0.0.9",
         "https://shp.ee/522qqf5",
+        "https://shp.ee/b6m4f6j",
+        "https://shopee.vn/thoitrangtheone",
+        "https://shopee.vn/minhnguyet997?smtt=0.0.9",
+        "https://shopee.vn/product/37765734/3049279473?smtt=0.37767119-1622516940.9",
+        "https://shopee.vn/product/37765734/2408929818?smtt=0.37767119-1622516978.9",
+        "https://shopee.vn/product/37765734/4239764607?smtt=0.37767119-1622517027.9",
+        "https://shopee.vn/shop/20777662/",
+        "https://shopee.vn/gundamviet",
+        "https://shp.ee/ucez4te",
+        "https://shp.ee/jwu7dw9",
+
     ]
 
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
-        maxConcurrency: 5,
+        maxConcurrency: 10,
     });
 
     // Define a task
@@ -51,10 +62,13 @@ const { Cluster } = require('puppeteer-cluster');
             return { url: "" }
         });
         console.log(spanHref);
+        shopUsername.push(spanHref);
+        console.log(shopUsername.length);
+
     });
 
     for (url of urls) {
-    cluster.queue(url)
+        cluster.queue(url)
     }
 
     await cluster.idle();
@@ -62,5 +76,5 @@ const { Cluster } = require('puppeteer-cluster');
 
     var end = new Date().getTime();
 
-    console.log("[Time run] ",(end-start)/1000, " seconds" );
+    console.log("[Time run] ", (end - start) / 1000, " seconds");
 })();

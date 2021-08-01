@@ -15,10 +15,20 @@ const puppeteer = require("puppeteer");
         "https://shopee.vn/caobacsilver",
         "https://shopee.vn/huyentrang8610?smtt=0.0.9",
         "https://shp.ee/522qqf5",
+        "https://shp.ee/b6m4f6j",
+        "https://shopee.vn/thoitrangtheone",
+        "https://shopee.vn/minhnguyet997?smtt=0.0.9",
+        "https://shopee.vn/product/37765734/3049279473?smtt=0.37767119-1622516940.9",
+        "https://shopee.vn/product/37765734/2408929818?smtt=0.37767119-1622516978.9",
+        "https://shopee.vn/product/37765734/4239764607?smtt=0.37767119-1622517027.9",
+        "https://shopee.vn/shop/20777662/",
+        "https://shopee.vn/gundamviet",
+        "https://shp.ee/ucez4te",
+        "https://shp.ee/jwu7dw9"
     ]
 
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
     });
     const page = await browser.newPage();
 
@@ -28,11 +38,6 @@ const puppeteer = require("puppeteer");
         await page.goto(`${url}`, { waitUntil: "networkidle0" }).catch((error) => {
             console.log(error.message);
             return { url: "URL Error" };
-        });
-
-        await page.setViewport({
-            width: 1560,
-            height: 1000
         });
 
         const spanHref = await page.evaluate(() => {
@@ -60,8 +65,8 @@ const puppeteer = require("puppeteer");
     }
 
     await browser.close();
-        
+
     var end = new Date().getTime();
 
-    console.log("[Time run] ", (end-start)/1000, " seconds" );
+    console.log("[Time run] ", (end - start) / 1000, " seconds");
 })();
