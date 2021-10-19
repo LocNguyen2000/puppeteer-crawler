@@ -22,7 +22,7 @@ const saveFile = async (data) => {
          width: 1560,
          height: 1000,
       })
-      
+
       // add function in the page that will log
       await page.exposeFunction('reportEvent', info => {
          console.log(info)
@@ -32,19 +32,30 @@ const saveFile = async (data) => {
       // Hook document with capturing event listeners that capture selectors
       await page.evaluateOnNewDocument(() => {
          function generateSelector(context) {
-            let pathSelector;
-            if (context == "null") throw "not an dom reference";
-            while (context.tagName) {
-               // selector path
-               const className = context.className
-               const idName = context.id
-               pathSelector = context.localName +
-                  (className ? `.${className}` : "") +
-                  (idName ? `#${idName}` : "") +
-                  (pathSelector ? ">" + pathSelector : "");
-               context = context.parentNode;
-            }
-            return pathSelector;
+            let pathSelector = []
+                if (context == 'null') throw 'not an dom reference'
+                while (context.tagName) {
+                    // selector path
+                    const className = context.className
+                    const idName = context.id
+                    const tagName = context.tagName
+
+                    if (tagName === 'BODY') pathSelector.push('body')
+                    else {
+                        pathSelector.push(
+                            tagName.toLowerCase() +
+                            (className ? `.${className}` : '') +
+                            (idName ? `#${idName}` : '')
+                        )
+                    }
+                    context = context.parentNode
+                }
+                if (pathSelector.length > 3) {
+                    pathSelector = pathSelector.slice(0, 3)
+                }
+                pathSelector.reverse()
+                let result = pathSelector.join('>')
+                return result
          }
          // load document
          document.addEventListener("DOMContentLoaded", () => {
@@ -67,15 +78,15 @@ const saveFile = async (data) => {
             });
          });
       });
-      await page.goto('https://tiki.vn/laptop/c8095?page=1');
-      await page.waitForNavigation(0).then( async () => {
+      await page.goto('https://tiki.vn/may-tinh-xach-tay-laptop-huawei-matebook-d15-8gb-256gb-share-man-hinh-huawei-fullview-huawei-phim-nguon-ket-hop-bao-mat-van-tay-hang-chinh-hang-p74556865.html');
+      await page.waitForNavigation().then(async () => {
          await browser.close()
       }).catch(error => {
          console.log('Navigation done');
       })
    } catch (error) {
       console.log(error);
-   } finally{
+   } finally {
       await saveFile(selectorsData);
    }
 

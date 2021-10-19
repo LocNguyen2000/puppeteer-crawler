@@ -7,7 +7,8 @@
     "crawler": "cd src && node crawler.js",
     "cluster": "cd src && node cluster.js",
     "start": "cd src && node main.js",
-    "test": "cd src/crawler && node index.js"
+    "test": "cd src/crawler && node index.js",
+    "test2": "cd src/crawler && node index2.js"
   },
   "author": "",
   "license": "ISC",
