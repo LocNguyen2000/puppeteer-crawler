@@ -4,20 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "crawler": "cd src && node crawler.js",
-    "cluster": "cd src && node cluster.js",
-    "start": "cd src && node main.js",
-    "test": "cd src/crawler && node index.js",
-    "test2": "cd src/crawler && node index2.js"
+    "record": "cd src/crawler && node recordEvent2.js",
+    "start": "cd src/crawler && node crawler.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "csv-stringify": "^5.6.2",
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
     "jsdom": "^17.0.0",
-    "puppeteer": "^10.1.0",
-    "puppeteer-cluster": "^0.22.0"
-  },
-  "devDependencies": {}
+    "puppeteer": "^13.5.1"
+  }
 }

@@ -1,22 +1,23 @@
 const pptr = require('puppeteer');
-const fs = require('fs')
+const $ = require( "jquery" )( window );
 
-const saveFile = async (data) => {
-   let output = JSON.stringify(data, null, 2)
-   const outputPath = `./selectors.json`
-   console.log('Saving to file...');
-   await fs.promises.writeFile(outputPath, output, 'utf-8')
-}
-
-// await page.exposeFunction('generateSelector', (context) => {
-// })
+// const fs = require('fs')
+// const saveFile = async (data) => {
+//    let output = JSON.stringify(data, null, 2)
+//    const outputPath = `./selectors.json`
+//    console.log('Saving to file...');
+//    await fs.promises.writeFile(outputPath, output, 'utf-8')
+// }
 
 (async () => {
    let selectorsData = []
 
    try {
-      const browser = await pptr.launch({ headless: false });
-
+      const browser = await pptr.launch({
+         headless: false,
+         defaultViewport: null,
+         args: ['--start-maximized'],
+     })
       const page = await browser.newPage();
       await page.setViewport({
          width: 1560,
@@ -59,31 +60,19 @@ const saveFile = async (data) => {
          }
          // load document
          document.addEventListener("DOMContentLoaded", () => {
-            // let delay = 1000
-            // let timer
-            // // hover on element for 3s to generate selectors
-            // document.body.addEventListener("mouseover", (e) => {
-            //    timer = setInterval(() => {
-            //       output = generateSelector(e.target);
-            //       selectors.push({ "selector": output })
-            //       reportEvent({ "selector": output });
-            //    }, delay)
-            // });
-            // document.body.addEventListener("mouseout", (e) => {
-            //    clearInterval(timer)
-            // })
             document.body.addEventListener("click", (e) => {
                let output = generateSelector(e.target);
                reportEvent({ "selector": output });
             });
          });
+         $(document).ready()
       });
-      await page.goto('https://tiki.vn/may-tinh-xach-tay-laptop-huawei-matebook-d15-8gb-256gb-share-man-hinh-huawei-fullview-huawei-phim-nguon-ket-hop-bao-mat-van-tay-hang-chinh-hang-p74556865.html');
-      await page.waitForNavigation().then(async () => {
-         await browser.close()
-      }).catch(error => {
-         console.log('Navigation done');
-      })
+      // await page.goto('https://tiki.vn/may-tinh-xach-tay-laptop-huawei-matebook-d15-8gb-256gb-share-man-hinh-huawei-fullview-huawei-phim-nguon-ket-hop-bao-mat-van-tay-hang-chinh-hang-p74556865.html');
+      // await page.waitForNavigation().then(async () => {
+      //    await browser.close()
+      // }).catch(error => {
+      //    console.log('Navigation done');
+      // })
    } catch (error) {
       console.log(error);
    } finally {
